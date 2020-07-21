@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Início</title>
+    </h:head>
+    <h:body>
+        <script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+ 
+ 
+<h:form>
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:submenu label="Usuario" >
+            <p:menuitem value="Entrar" onclick="PF('dlg').show();" />
+            <p:separator />
+            <p:menuitem value="Cadastrar" onclick="PF('dlg2').show();" />
+        </p:submenu>
+  
+    </p:menubar>
+    
+ </h:form>    
+        
+        <h:form>      
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+     
+    <p:dialog header="Login" modal="true"  widgetVar="dlg" resizable="true">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel for="username" value="Email:" />
+            <p:inputText id="username" value="#{bean.user.email}" required="true" label="username" />
+             
+            <h:outputLabel for="password" value="Senha:" />
+            <p:password id="password" value="#{bean.user.senha}" required="true" label="password" />
+            
+             
+            <f:facet name="footer">
+                <p:commandButton value="Entrar" update="growl" action="#{bean.logar()}"
+                                 oncomplete="handleLoginRequest(xhr, status, args)" />
+            </f:facet>
+       
+        </h:panelGrid>
+    </p:dialog>    
+        </h:form> 
+        <h:form>
+            
+            <p:growl id="messages"/>
+            <p:dialog header="Cadastro de usuário" modal="true" widgetVar="dlg2" resizable="true" >
+        <h:panelGrid columns="2" cellpadding="5">
+            
+                <p:outputLabel value="Nome:" />
+                <p:inputText value="#{bean.user.nome}" required="true" />
+                <p:outputLabel value="Email:"  />
+                <p:inputText id="email" value="#{bean.user.email}" required="true" validatorMessage="E-mail incorreto" >
+                     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                </p:inputText>
+                <p:outputLabel value="Data de nascimento:" />
+                <p:inputMask mask="99/99/9999" value="#{bean.user.dt_nascimento}" required="true" />
+                <h:outputLabel for="pwd1" value="Senha: " />
+                <p:password id="pwd1" value="#{bean.user.senha}" match="pwd2" label="Password 1" required="true" />
+
+                <h:outputLabel for="pwd2" value="Confirmar senha:" />
+                <p:password id="pwd2"  label="Password 2" required="true" />
+
+         
+                <p:commandButton value="Cadastrar" action="#{bean.inserirUsuario()}" update="@form" />
+   
+        </h:panelGrid>
+            
+    
+        </p:dialog>  
+ </h:form> 
+    </h:body>
+</html>
+

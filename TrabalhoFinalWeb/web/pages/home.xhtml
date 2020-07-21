@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Bem-Vindo</title>
+    </h:head>
+    <h:body>
+ 
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        
+        <p:menuitem value="Club das Bebidas" url="#" />
+ 
+        <p:submenu label="Editar" >
+            <p:menuitem value="Nova categoria" url="cadastroCategoria.xhtml"  />
+            <p:menuitem value="Nova bebida" url="cadastroBebida.xhtml"  />
+        </p:submenu>
+ 
+ 
+        <f:facet name="options">
+            <p:commandButton value="Sair" action="#{bean.sair()}" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+        <h1>Bem-Vindo #{bean.user.nome} </h1>
+        <h:form>
+            <h2>Pesquisar uma bebida:</h2>
+            <h:panelGrid columns="1">
+                <p:outputLabel value="SKU:" />
+                <p:inputText value="#{bean.bebida.sku}" />
+                <p:outputLabel value="Categoria:" /> 
+                <p:selectOneMenu value="#{bean.bebida.categoria.id_categoria}" >
+                    <f:selectItem itemLabel="Selecione uma categoria" value="#{bean.bebida.categoria.id_categoria}" />
+                    <f:selectItems value="#{bean.categorialist}" var="list"  itemLabel="#{list.nome_categoria}" itemValue="#{list.id_categoria}"  />
+                </p:selectOneMenu>
+                <p:outputLabel value="Nacionalidade:" />
+                <p:selectOneRadio value="#{bean.bebida.nacionalidade}" >
+                    <f:selectItem itemLabel="Nacional" itemValue="Nacional" />
+                    <f:selectItem itemLabel="Internacional" itemValue="Internacional" />
+                </p:selectOneRadio>
+                <p:commandButton value="Pesquisar" action="#{bean.pesquisarBebida()}" update="@form" /> 
+            </h:panelGrid>
+            <br />
+            <h2>Resultados Encontrados:</h2>
+         
+            <p:dataTable 
+                value="#{bean.bebidalist}"
+                var="bebida"
+                emptyMessage="Nenhuma bebida encontrada"
+                rows="10"
+                paginator="false"
+                paginatorPosition="botton">
+           
+                <p:column headerText="Código" >
+                    <p:outputLabel value="#{bebida.sku}" />
+                </p:column>    
+                <p:column headerText="Nome"  >
+                    <p:outputLabel value="#{bebida.nome_bebida}" />
+                </p:column>
+                <p:column headerText="Descrição"  >
+                    <p:outputLabel value="#{bebida.descricao}" />
+                </p:column>
+                <p:column headerText="Valor(R$)"  >
+                    <p:outputLabel value="#{bebida.valor}" />
+                </p:column>
+                <p:column headerText="Teor Alcoolico %"  >
+                    <p:outputLabel value="#{bebida.teor}" />
+                </p:column>
+                <p:column headerText="Em estoque"  >
+                    <p:outputLabel value="#{bebida.quantidade}" />
+                </p:column>
+
+
+
+            </p:dataTable>
+        </h:form>
+        
+    </h:body>
+</html>
+

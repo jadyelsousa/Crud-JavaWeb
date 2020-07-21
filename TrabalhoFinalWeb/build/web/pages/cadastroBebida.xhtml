@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Nova bebida</title>
+    </h:head>
+    <h:body>
+ 
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+        <p:menuitem value="Club das Bebidas" url="home.xhtml" />
+ 
+        <f:facet name="options">
+            <p:commandButton value="Sair" action="#{bean.sair()}" />
+        </f:facet>
+    </p:menubar>
+</h:form>
+    <h:form>
+    <h2>Cadastrar bebida </h2>
+            
+            <h:panelGrid columns="2" >
+                <p:outputLabel value="SKU:" />
+                <p:inputText value="#{bean.bebida.sku}" />
+                <p:outputLabel value="Nome:" />
+                <p:inputText value="#{bean.bebida.nome_bebida}" />
+                <p:outputLabel value="Descrição:" />
+                <p:inputTextarea value="#{bean.bebida.descricao}" />
+            </h:panelGrid>
+            
+            <h:panelGrid columns="4" >
+                <p:outputLabel value="Categoria:" /> 
+                <p:selectOneMenu value="#{bean.bebida.categoria.id_categoria}" >
+                    <f:selectItem itemLabel="Selecione uma categoria" value="#{bean.bebida.categoria.id_categoria}" />
+                    <f:selectItems value="#{bean.categorialist}" var="list"  itemLabel="#{list.nome_categoria}" itemValue="#{list.id_categoria}"  />
+                </p:selectOneMenu>
+                <p:outputLabel value="Teor:" />
+                <p:inputText value="#{bean.bebida.teor}" />
+                <p:outputLabel value="Preço:" />
+                <p:inputText value="#{bean.bebida.valor}" />
+                <p:outputLabel value="Estoque:" />
+                <p:inputText value="#{bean.bebida.quantidade}" />
+                <p:outputLabel value="Nacionalidade:" />
+                <p:selectOneRadio value="#{bean.bebida.nacionalidade}" >
+                    <f:selectItem itemLabel="Nacional" itemValue="Nacional" />
+                    <f:selectItem itemLabel="Internacional" itemValue="Internacional" />
+                </p:selectOneRadio>
+            </h:panelGrid>
+                <h:panelGrid columns="1" >
+                     <p:commandButton value="Salvar" action="#{bean.inserirBebida()}" update="@form" /> 
+                </h:panelGrid>
+            
+            
+        </h:form>
+    </h:body>
+</html>
+
